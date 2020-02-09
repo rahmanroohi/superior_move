@@ -1,0 +1,135 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:superior_move/public/SizeConfig.dart';
+import 'package:superior_move/public/BeautyTextfield.dart';
+
+class VerficationCode extends StatefulWidget {
+  const VerficationCode({Key key}) : super(key: key);
+
+  @override
+  _VerficationCode createState() => _VerficationCode();
+}
+
+class _VerficationCode extends State<VerficationCode> {
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return Scaffold(
+        body: SafeArea(child:Container(
+            color: Color.fromRGBO(248, 248, 248, 0.95),
+            child: ListView(
+              children: <Widget>[
+                Container(
+                    child: Stack(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment(0.0, 0.0),
+                          child: Container(
+                            width: SizeConfig.blockSizeHorizontal * 35,
+                            height: SizeConfig.blockSizeVertical * 15,
+                            child: Image.asset("assets/images/logo.png"),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: SizeConfig.blockSizeVertical * 2,
+                          right: SizeConfig.blockSizeHorizontal * 4,
+                          child: Text(
+                            "verify",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                        )
+                      ],
+                    ),
+                    width: SizeConfig.blockSizeHorizontal * 100,
+                    height: SizeConfig.blockSizeVertical * 35,
+                    decoration: new BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color.fromRGBO(245, 89, 31, 1),
+                              Color.fromRGBO(250, 151, 64, 1)
+                            ]),
+                        borderRadius: new BorderRadius.only(
+                          bottomLeft: const Radius.circular(100.0),
+                        ))),
+                Container(
+                  width: SizeConfig.blockSizeHorizontal * 100,
+                  height: SizeConfig.blockSizeVertical * 64,
+                  margin: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * 8,
+                      right: SizeConfig.blockSizeHorizontal * 8),
+                  child:ListView(children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(height: SizeConfig.blockSizeVertical * 8),
+                              TextField(
+                                  keyboardType: TextInputType.number,
+                                decoration: new InputDecoration(
+                                    hintText: "",
+                                    hintStyle: TextStyle(
+                                        color: Colors.black26,
+                                        fontWeight: FontWeight.bold),
+                                    prefixIcon: Icon(Icons.verified_user),
+                                    border: new OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(50.0),
+                                        ),
+                                        borderSide: BorderSide.none),
+                                    filled: true,
+                                    fillColor: Colors.white70),
+                              ),
+
+
+                              SizedBox(height: SizeConfig.blockSizeVertical * 6),
+                              Container(
+                                width: SizeConfig.blockSizeHorizontal * 100,
+                                height: SizeConfig.blockSizeVertical * 7,
+                                child: RaisedButton(
+                                  onPressed: () {},
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(80.0)),
+                                  padding: EdgeInsets.all(0.0),
+                                  child: Ink(
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color.fromRGBO(245, 89, 31, 1),
+                                            Color.fromRGBO(250, 151, 64, 1)
+                                          ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(30.0)),
+                                    child: Container(
+                                      width: SizeConfig.blockSizeHorizontal * 100,
+                                      height: SizeConfig.blockSizeVertical * 7,
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Verify",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+
+                      ],
+                    )
+
+                  ],),
+                )
+              ],
+            ))));
+  }
+}
