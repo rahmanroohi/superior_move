@@ -1,7 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:superior_move/public/SizeConfig.dart';
+import 'dart:async';
+import 'Login.dart';
 
-class Splash extends StatelessWidget {
+
+class Splash extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    return _Splash();
+  }
+}
+
+class _Splash extends State<Splash>  {
+
+  @override
+  void initState() {
+    super.initState();
+
+    loadData();
+  }
+
+  Future<Timer> loadData() async {
+    return new Timer(Duration(seconds: 3), onDoneLoading);
+  }
+
+  onDoneLoading() async {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login()));
+  }
+
   //commit change users
   // This widget is the root of your application.
   @override

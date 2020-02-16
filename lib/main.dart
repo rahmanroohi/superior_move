@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           canvasColor: Colors.transparent, //----Change to this------------
           accentColor: Colors.blue,
         ),
-      home: VerficationCode()
+      home: Splash()
     );
    }
 }

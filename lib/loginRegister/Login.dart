@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:superior_move/loginRegister/Register.dart';
 import 'package:superior_move/public/SizeConfig.dart';
 import 'package:superior_move/public/BeautyTextfield.dart';
 
@@ -165,6 +166,9 @@ class _Login extends State<Login> {
                           children: <Widget>[
                             Text("Don't have an account"),
                             GestureDetector(
+                              onTap: (){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Register()));
+                              },
                               child: Text(
                                 " Register",
                                 style: TextStyle(
