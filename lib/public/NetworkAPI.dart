@@ -4,25 +4,27 @@ import 'package:superior_move/model/BaseListDaynamic.dart';
 import 'dart:convert' as convert;
 
 import 'package:superior_move/model/BaseListDaynamicStandard.dart';
+
 class NetworkAPI {
-
   final host = "http://harekat.kiancode.ir/index.php/api/";
-  Map<String, String> commonHeaders = {'Agent' : 'iPhone', 'App-Version' : '1.0.0'}; //common header proerties for all requests
-
+  Map<String, String> commonHeaders = {
+    'Agent': 'iPhone',
+    'App-Version': '1.0.0'
+  }; //common header proerties for all requests
 
   void httpGetRequest(
       String serviceUrl,
       Map<String, dynamic> headers,
       void completionHandler(
           bool status, List<Map<String, dynamic>> responseData)) async {
-
     var httpHeaders = this.commonHeaders;
     if (headers != null) {
       httpHeaders.addAll(headers);
     }
 
     try {
-      final response = await http.get(this.host + serviceUrl, headers: httpHeaders);
+      final response =
+          await http.get(this.host + serviceUrl, headers: httpHeaders);
       if (response.statusCode == 200) {
         final d = response.body;
         //print('WebServiceRequest - $serviceUrl \n Response - $d');
@@ -49,14 +51,22 @@ class NetworkAPI {
     }
 
     try {
-      final response = await http.post(this.host + serviceUrl,
-          body: postData);
-      print(response.body+" "+response.statusCode.toString());
-      if (response.statusCode == 200) {
+      final response = await http.post(this.host + serviceUrl, body: postData);
+      print(response.body + " " + response.statusCode.toString());
+      if (response.statusCode == 200 ||
+          response.statusCode == 1000 ||
+          response.statusCode == 1012 ||
+          response.statusCode == 1100 ||
+          response.statusCode == 1003 ||
+          response.statusCode == 1011 ||
+          response.statusCode == 1031 ||
+          response.statusCode == 1001 ||
+          response.statusCode == 1071) {
         final d = response.body;
-        BaseListDaynamic jResponse = BaseListDaynamic.fromJson(convert.jsonDecode(response.body));
+        BaseListDaynamic jResponse =
+            BaseListDaynamic.fromJson(convert.jsonDecode(response.body));
         //print('WebServiceRequest - $serviceUrl \nResponse - $d');
-        completionHandler(true,  jResponse);
+        completionHandler(true, jResponse);
       } else {
         completionHandler(false, null);
       }
@@ -65,6 +75,4 @@ class NetworkAPI {
       completionHandler(false, null);
     }
   }
-
-
 }

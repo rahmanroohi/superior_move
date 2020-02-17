@@ -11,6 +11,7 @@ import "package:superior_move/public/NetworkAPI.dart";
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:superior_move/model/BaseListDaynamicStandard.dart';
+import 'package:superior_move/loginRegister/Verification.dart';
 class Register extends StatefulWidget {
   const Register({Key key}) : super(key: key);
 
@@ -24,12 +25,15 @@ class _Register extends State<Register> {
   final EmainPhone = TextEditingController();
   final Password = TextEditingController();
   Users users;
+   bool passwordVisible = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     users=new Users();
+    passwordVisible = false;
+
 
   }
 
@@ -127,13 +131,27 @@ class _Register extends State<Register> {
                                 SizedBox(height: SizeConfig.blockSizeVertical * 2),
                                 TextField(
                                   controller: Password,
-                                  obscureText: true,
+                                  obscureText: passwordVisible,
                                   decoration: new InputDecoration(
                                       hintText: "Password",
                                       hintStyle: TextStyle(
                                           color: Colors.black26,
                                           fontWeight: FontWeight.bold),
-                                      prefixIcon: Icon(Icons.vpn_key),
+                                      prefixIcon: IconButton(
+                                        icon: Icon(
+                                          // Based on passwordVisible state choose the icon
+                                          passwordVisible
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
+                                          color: Colors.grey,
+                                        ),
+                                        onPressed: () {
+                                          // Update the state i.e. toogle the state of passwordVisible variable
+                                          setState(() {
+                                            passwordVisible = !passwordVisible;
+                                          });
+                                        },
+                                      ),
                                       border: new OutlineInputBorder(
                                           borderRadius: const BorderRadius.all(
                                             const Radius.circular(50.0),
@@ -147,8 +165,12 @@ class _Register extends State<Register> {
                                   width: SizeConfig.blockSizeHorizontal * 100,
                                   height: SizeConfig.blockSizeVertical * 7,
                                   child: RaisedButton(
-                                    onPressed: () {
-                                      Register();
+                                    onPressed: () async{
+                                      bool result = await Register();
+                                      if(result)
+
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder:
+                                            (BuildContext context) => VerficationCode()));
                                     },
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(80.0)),
@@ -275,20 +297,62 @@ class _Register extends State<Register> {
 
 
 
+
+
+
   Future<bool> Register()async
   {
 
 
 
-    final postData = {'user': '09382126359','password': 'rahman123','nickname': 'rahman','device':'121321',"log":"sdfsdf"};
+    final postData = {'user': '09382126396','password': 'rahman123','nickname': 'rahman','device':'121321',"log":"sdfsdf"};
     final header = {'header1key' : 'header1val'};
     await NetworkAPI().httpPostRequest('register/', null, postData, (status, response){
 
       if (status == true) {
 
+  switch(response.s)
+  {
+    case 1:
+
+      users.insert(Users.fromJson(response.d),"0");
+      return true;
+
+      break;
+    case 1000:
+
+
+      break;
+    case 1012:
+
+      break;
+    case 1100:
+
+      break;
+    case 1003:
+
+      break;
+
+    case 1011:
+
+      break;
+
+    case 1031:
+
+      break;
+
+    case 1001:
+
+      break;
+    case 1017:
+
+      break;
+  }
+        
+        
         if(response.s==1)
           {
-            users.insert(Users.fromJson(response.d));
+
           }else
             {
 

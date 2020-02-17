@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:superior_move/public/SizeConfig.dart';
 import 'package:superior_move/public/BeautyTextfield.dart';
-
+import 'package:superior_move/public/NetworkAPI.dart';
+import 'package:superior_move/model/Users.dart';
 class VerficationCode extends StatefulWidget {
   const VerficationCode({Key key}) : super(key: key);
 
@@ -11,6 +12,14 @@ class VerficationCode extends StatefulWidget {
 }
 
 class _VerficationCode extends State<VerficationCode> {
+  Users users;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    users=new Users();
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -132,4 +141,72 @@ class _VerficationCode extends State<VerficationCode> {
               ],
             ))));
   }
+
+  Future<bool> Register()async
+  {
+
+
+
+    final postData = {'user': '09382126396','password': 'rahman123','nickname': 'rahman','device':'121321',"log":"sdfsdf"};
+    final header = {'header1key' : 'header1val'};
+    await NetworkAPI().httpPostRequest('register/', null, postData, (status, response){
+
+      if (status == true) {
+
+        switch(response.s)
+        {
+          case 1:
+
+            users.insert(Users.fromJson(response.d),"0");
+            return true;
+
+            break;
+          case 1000:
+
+
+            break;
+          case 1012:
+
+            break;
+          case 1100:
+
+            break;
+          case 1003:
+
+            break;
+
+          case 1011:
+
+            break;
+
+          case 1031:
+
+            break;
+
+          case 1001:
+
+            break;
+          case 1017:
+
+            break;
+        }
+
+
+        if(response.s==1)
+        {
+
+        }else
+        {
+
+        }
+        /* for (var mainRequest in response) {
+          MainRequest u =  MainRequest.fromMap(mainRequest);
+         *//* Users.insert(u);*//**//* //insert to SQLite table*//*
+        }*/
+      }
+      else{}
+    });
+    return true;
+  }
+
 }

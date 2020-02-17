@@ -20,6 +20,7 @@ class Users {
   String email;
   String tel1;
   String date;
+  String flag;
 
   Users({
     this.userId,
@@ -29,6 +30,7 @@ class Users {
     this.email,
     this.tel1,
     this.date,
+    this.flag
   });
 
   factory Users.fromJson(Map<String, dynamic> json) => Users(
@@ -47,7 +49,8 @@ class Users {
       user_code:  json[UsersDb.user_code],
       email: json[UsersDb.email],
       tel1:  (json[UsersDb.tel1] != null) ?json[UsersDb.tel1] : "",
-      date: json[UsersDb.date]
+      date: json[UsersDb.date],
+      flag:  (json[UsersDb.flag] != null)?json[UsersDb.flag]:""
   );
 
 
@@ -58,6 +61,7 @@ class Users {
     "email": email,
     "tel1": tel1,
     "date": date,
+    "flag": flag,
   };
   Map<String, dynamic> toMap() => {
     UsersDb.username: username,
@@ -65,7 +69,8 @@ class Users {
     UsersDb.user_code: user_code,
     UsersDb.email: email,
     UsersDb.tel1: tel1,
-    UsersDb.date: date
+    UsersDb.date: date,
+    UsersDb.flag: flag
   };
 
 
@@ -90,7 +95,7 @@ class Users {
   }
 
   DB tmpProvide;
-   insert(Users model) async {
+   insert(Users model,String flag) async {
 
      deleteAll();
 
@@ -99,18 +104,17 @@ class Users {
     var query = await db.rawQuery(
         "INSERT OR REPLACE INTO  ${UsersTb}"
             "(${UsersDb.username}, ${UsersDb.nickname}, ${UsersDb.user_code},"
-            "${UsersDb.email},  ${UsersDb.tel1}, ${UsersDb.date})"
-            " VALUES (?,?,?,?,?,?)",
+            "${UsersDb.email},  ${UsersDb.tel1}, ${UsersDb.date}, ${UsersDb.flag})"
+            " VALUES (?,?,?,?,?,?,?)",
         [
           model.username,
           model.nickname,
           model.user_code,
           model.email,
           model.tel1,
-          model.date
+          model.date,
+          flag
         ]);
-
-
     return query;
   }
 
@@ -138,6 +142,29 @@ class Users {
      Database db = await tmpProvide.database;
 
     return db.delete("${UsersTb}");
+  }
+
+  Future<List<Users>> ListUsers() async {
+    // Get a reference to the database.
+    tmpProvide = DB.db;
+
+    Database db = await tmpProvide.database;
+
+    // Query the table for all The Dogs.
+    final List<Map<String, dynamic>> maps = await db.query(UsersTb);
+
+    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    return List.generate(maps.length, (i) {
+      return Users(
+        userId: maps[i]['userId'],
+        nickname: maps[i]['nickname'],
+        username: maps[i]['username'],
+        email: maps[i]['email'],
+        tel1: maps[i]['tel1'],
+        date: maps[i]['date'],
+        flag: maps[i]['flag'],
+      );
+    });
   }
 
 

@@ -10,9 +10,16 @@ class UsersDb {
   static const email = 'email';
   static const tel1 = 'tel1';
   static const date = 'date';
-
+  static const flag = 'flag';
 
 }
+
+//FLAG STATE
+/***
+ * 0-RESGISTER
+ * 1-VERYFY OK
+ * 2- LOGIN
+ */
 
 
  const UsersTb = 'USERS';
@@ -21,8 +28,9 @@ String UsersDbTableCreateQuery =
     "${UsersDb.userId} INTEGER PRIMARY KEY,"
     "${UsersDb.username} TEXT,"
     "${UsersDb.nickname} TEXT,"
-    "${UsersDb.user_code} INTEGER,"
-    "${UsersDb.email} INTEGER,"
+    "${UsersDb.user_code} TEXT,"
+    "${UsersDb.email} TEXT,"
     "${UsersDb.tel1} TEXT,"
-    "${UsersDb.date} INTEGER"
+    "${UsersDb.date} TEXT,"
+    "${UsersDb.flag} INTEGER"
     ")";
