@@ -13,14 +13,14 @@ Users usersFromJson(String str) => Users.fromJson(json.decode(str));
 String usersToJson(Users data) => json.encode(data.toJson());
 
 class Users {
-  String userId;
+  int userId;
   String username;
   String nickname;
   String user_code;
   String email;
   String tel1;
   String date;
-  String flag;
+  int flag;
 
   Users({
     this.userId,
@@ -129,6 +129,16 @@ class Users {
     return result;
   }
 
+  updateFlag(String  flag,String users) async {
+
+    tmpProvide = DB.db;
+
+    Database db = await tmpProvide.database;
+
+    var result = await db.execute("update $UsersTb set flag='$flag' where username='$users'");
+    return result;
+  }
+
    deleteRecord(int id) async {
      tmpProvide = DB.db;
 
@@ -150,8 +160,10 @@ class Users {
 
     Database db = await tmpProvide.database;
 
+
     // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await db.query(UsersTb);
+    final List<Map<String, dynamic>> maps = await
+    db.query(UsersTb);
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
     return List.generate(maps.length, (i) {

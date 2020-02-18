@@ -24,6 +24,7 @@ class _Register extends State<Register> {
   final FullName = TextEditingController();
   final EmainPhone = TextEditingController();
   final Password = TextEditingController();
+
   Users users;
    bool passwordVisible = false;
 
@@ -166,11 +167,10 @@ class _Register extends State<Register> {
                                   height: SizeConfig.blockSizeVertical * 7,
                                   child: RaisedButton(
                                     onPressed: () async{
-                                      bool result = await Register();
-                                      if(result)
-
+                                      String result = await Register();
+                                      if(result.length>0)
                                         Navigator.pushReplacement(context, MaterialPageRoute(builder:
-                                            (BuildContext context) => VerficationCode()));
+                                            (BuildContext context) => VerficationCode(username: result,)));
                                     },
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(80.0)),
@@ -229,7 +229,7 @@ class _Register extends State<Register> {
                   )
                 ],
               ),
-              Align(
+             /* Align(
                 alignment: Alignment.center,
                 child: FutureBuilder(
                   future: _calculation,
@@ -285,27 +285,27 @@ class _Register extends State<Register> {
                     }
 
                 ),
-              )
+              )*/
             ],))));
   }
 
-  Future _calculation = Future<Users>.delayed(
+/*  Future _calculation = Future<Users>.delayed(
 
     Duration(seconds: 2),
         () => new Users(),
-  );
+  );*/
 
 
 
 
 
 
-  Future<bool> Register()async
+  Future<String> Register()async
   {
 
 
-
-    final postData = {'user': '09382126396','password': 'rahman123','nickname': 'rahman','device':'121321',"log":"sdfsdf"};
+    String user="";
+    final postData = {'user': EmainPhone.text,'password': Password.text,'nickname':FullName.text ,'device':'123',"log":"123"};
     final header = {'header1key' : 'header1val'};
     await NetworkAPI().httpPostRequest('register/', null, postData, (status, response){
 
@@ -316,6 +316,7 @@ class _Register extends State<Register> {
     case 1:
 
       users.insert(Users.fromJson(response.d),"0");
+      user=Users.fromJson(response.d).username;
       return true;
 
       break;
@@ -350,21 +351,17 @@ class _Register extends State<Register> {
   }
         
         
-        if(response.s==1)
-          {
 
-          }else
-            {
-
-            }
        /* for (var mainRequest in response) {
           MainRequest u =  MainRequest.fromMap(mainRequest);
          *//* Users.insert(u);*//**//* //insert to SQLite table*//*
         }*/
       }
-      else{}
+      else{
+        return "";
+      }
     });
-    return true;
+    return user;
   }
 
 

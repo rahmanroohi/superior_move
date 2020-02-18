@@ -54,14 +54,8 @@ class NetworkAPI {
       final response = await http.post(this.host + serviceUrl, body: postData);
       print(response.body + " " + response.statusCode.toString());
       if (response.statusCode == 200 ||
-          response.statusCode == 1000 ||
-          response.statusCode == 1012 ||
-          response.statusCode == 1100 ||
-          response.statusCode == 1003 ||
-          response.statusCode == 1011 ||
-          response.statusCode == 1031 ||
-          response.statusCode == 1001 ||
-          response.statusCode == 1071) {
+          response.statusCode == 400
+        ) {
         final d = response.body;
         BaseListDaynamic jResponse =
             BaseListDaynamic.fromJson(convert.jsonDecode(response.body));

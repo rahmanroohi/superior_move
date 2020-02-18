@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:superior_move/loginRegister/Register.dart';
+import 'package:superior_move/model/Users.dart';
 import 'package:superior_move/public/SizeConfig.dart';
 import 'package:superior_move/public/BeautyTextfield.dart';
 
@@ -12,6 +13,15 @@ class Login extends StatefulWidget {
 }
 
 class _Login extends State<Login> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -185,4 +195,6 @@ class _Login extends State<Login> {
               ],
             ))));
   }
+
+
 }

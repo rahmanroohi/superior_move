@@ -5,14 +5,22 @@ import 'package:superior_move/public/BeautyTextfield.dart';
 import 'package:superior_move/public/NetworkAPI.dart';
 import 'package:superior_move/model/Users.dart';
 class VerficationCode extends StatefulWidget {
-  const VerficationCode({Key key}) : super(key: key);
+ // const VerficationCode({Key key}) : super(key: key);
+
+  final String username;
+
+  // In the constructor, require a Todo.
+  VerficationCode({Key key, @required this.username}) :super(key: key);
 
   @override
-  _VerficationCode createState() => _VerficationCode();
+  _VerficationCode createState() => _VerficationCode(username);
 }
 
 class _VerficationCode extends State<VerficationCode> {
   Users users;
+  final verficationCodeTF = TextEditingController();
+  String   username="";
+  _VerficationCode(this.username);
 
   @override
   void initState() {
@@ -77,6 +85,7 @@ class _VerficationCode extends State<VerficationCode> {
                             children: <Widget>[
                               SizedBox(height: SizeConfig.blockSizeVertical * 8),
                               TextField(
+
                                   keyboardType: TextInputType.number,
                                 decoration: new InputDecoration(
                                     hintText: "",
@@ -99,7 +108,13 @@ class _VerficationCode extends State<VerficationCode> {
                                 width: SizeConfig.blockSizeHorizontal * 100,
                                 height: SizeConfig.blockSizeVertical * 7,
                                 child: RaisedButton(
-                                  onPressed: () {},
+                                  onPressed: () async{
+                                    bool result = await verification();
+                                    if(result)
+                                      print("yes absolotly");
+                                    else
+                                      print("no error");
+                                  },
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(80.0)),
                                   padding: EdgeInsets.all(0.0),
@@ -142,22 +157,22 @@ class _VerficationCode extends State<VerficationCode> {
             ))));
   }
 
-  Future<bool> Register()async
+  Future<bool> verification()async
   {
 
 
-
-    final postData = {'user': '09382126396','password': 'rahman123','nickname': 'rahman','device':'121321',"log":"sdfsdf"};
+print(username+" - asdasdasdasdasd");
+    final postData = {'user': username,'device':'123',"log":"123","code":verficationCodeTF.text};
     final header = {'header1key' : 'header1val'};
-    await NetworkAPI().httpPostRequest('register/', null, postData, (status, response){
+    await NetworkAPI().httpPostRequest('verify/', null, postData, (status, response){
 
       if (status == true) {
 
         switch(response.s)
         {
           case 1:
-
-            users.insert(Users.fromJson(response.d),"0");
+            users.updateFlag("1",Users.fromJson(response.d).username);
+            print(response.d);
             return true;
 
             break;
