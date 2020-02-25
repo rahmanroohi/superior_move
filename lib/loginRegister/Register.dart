@@ -305,9 +305,10 @@ class _Register extends State<Register> {
 
 
     String user="";
-    final postData = {'user': EmainPhone.text,'password': Password.text,'nickname':FullName.text ,'device':'123',"log":"123"};
+    /*final postData = {'user': EmainPhone.text,'password': Password.text,'nickname':FullName.text ,'device':'123',"log":"123"};*/
+    final postData = {};
     final header = {'header1key' : 'header1val'};
-    await NetworkAPI().httpPostRequest('register/', null, postData, (status, response){
+    await NetworkAPI().httpPostRequest(/*'register/'*/'rahmanlist/', null, postData, (status, response){
 
       if (status == true) {
 
